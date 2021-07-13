@@ -1,0 +1,23 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches: [ master 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Packages
+        run: npm install
+      
+      - name: Serverless Deploy
+        uses: serverless/github-action@v2.1.0
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        with:
+          args: deploy
