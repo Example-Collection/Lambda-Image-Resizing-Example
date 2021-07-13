@@ -1,0 +1,15 @@
+service: ImageResizing
+plugins:
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: DEVELOPMENT
+  region: ap-northeast-2
+  environment:
+    TZ: "Asia/Seoul"
+
+functions:
+  sayHello:
+    handler: src/helloWorld/handler.helloLambdaWorld
