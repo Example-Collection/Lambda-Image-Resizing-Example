@@ -32,7 +32,7 @@ const UploadImage = (): JSX.Element => {
     return (byte / 1024.0).toFixed(2);
   };
 
-  const getImageAsString = (): string => {
+  const getImageSrc = (): string => {
     let imageString = "";
     let reader = new FileReader();
     reader.onload = (event) => {
@@ -67,7 +67,7 @@ const UploadImage = (): JSX.Element => {
       <Space />
       <ImageContainer
         ref={imageRef}
-        src={image ? getImageAsString() : imgQuestion}
+        src={image ? getImageSrc() : imgQuestion}
       />
       <Space />
       <ButtonContainer>
