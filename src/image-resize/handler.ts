@@ -1,4 +1,5 @@
 import { Handler } from "aws-lambda";
+import * as AWS from "aws-sdk";
 
 interface Response {
   message: string;
