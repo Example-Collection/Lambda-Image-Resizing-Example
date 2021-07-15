@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   border: 5px solid #afafaf;
-  width: 500px;
+  width: 600px;
   align-items: center;
 `;
 
@@ -19,7 +19,7 @@ export const Title = styled.h3`
 `;
 
 export const ImageContainer = styled.img`
-  width: 400px;
+  width: 500px;
   height: 400px;
   border: 1px solid var(--gray);
 `;
@@ -68,4 +68,23 @@ export const UploadButton = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const Table = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+`;
+
+export const Tr = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+`;
+
+export const Td = styled.div<{ flex: number }>`
+  flex: ${(props) => props.flex};
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(--gray);
 `;

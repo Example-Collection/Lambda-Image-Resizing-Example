@@ -8,7 +8,10 @@ import {
   Input,
   SelectButton,
   Space,
+  Table,
+  Td,
   Title,
+  Tr,
   UploadButton,
 } from "./styles";
 import imgQuestion from "./assets/question.png";
@@ -18,9 +21,14 @@ const UploadImage = (): JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
   const imageRef =
     useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
+
   const parseFileName = (rawUrl: string): string => {
     const splitted = rawUrl.split("/");
     return splitted[splitted.length - 1];
+  };
+
+  const byteToKB = (byte: number): string => {
+    return (byte / 1024.0).toFixed(2);
   };
 
   const getImageAsString = (): string => {
@@ -70,6 +78,18 @@ const UploadImage = (): JSX.Element => {
         </label>
         <UploadButton>Upload</UploadButton>
       </ButtonContainer>
+      <Space />
+      <div>Before Uploading..</div>
+      <Table>
+        <Tr>
+          <Td flex={1}>Name</Td>
+          <Td flex={2}>Size</Td>
+        </Tr>
+        <Tr>
+          <Td flex={1}>{image ? image.name : ""}</Td>
+          <Td flex={2}>{image ? byteToKB(image.size) + "KB" : ""}</Td>
+        </Tr>
+      </Table>
     </Container>
   );
 };
