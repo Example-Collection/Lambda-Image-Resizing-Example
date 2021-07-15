@@ -1,6 +1,7 @@
 service: ImageResizing
 plugins:
   - serverless-plugin-typescript
+  - serverless-offline
 
 provider:
   name: aws
@@ -12,4 +13,4 @@ provider:
 
 functions:
   sayHello:
-    handler: src/helloWorld/handler.helloLambdaWorld
+    handler: src/image-resize/handler.helloLambdaWorld
