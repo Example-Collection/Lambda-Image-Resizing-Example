@@ -5,9 +5,11 @@ import {
   Container,
   Divider,
   ImageContainer,
+  Input,
   SelectButton,
   Space,
   Title,
+  UploadButton,
 } from "./styles";
 import imgQuestion from "./assets/question.png";
 
@@ -33,9 +35,8 @@ const UploadImage = (): JSX.Element => {
     return imageString;
   };
 
-  const onImageSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+  const onImageSelect = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
-    console.log("ASDF");
     if (event.currentTarget.files !== null) {
       const file = event.currentTarget.files[0];
       console.log(file.name);
@@ -54,13 +55,20 @@ const UploadImage = (): JSX.Element => {
     <Container>
       <Title>Image Uploader</Title>
       <Divider />
+      <Space />
       <ImageContainer
         ref={imageRef}
         src={image ? getImageAsString() : imgQuestion}
       />
       <Space />
       <ButtonContainer>
-        <SelectButton onSubmit={onImageSubmit} />
+        <label>
+          <SelectButton>
+            Select
+            <Input onChange={onImageSelect} />
+          </SelectButton>
+        </label>
+        <UploadButton>Upload</UploadButton>
       </ButtonContainer>
     </Container>
   );

@@ -30,16 +30,42 @@ export const Space = styled.div<{ height?: number }>`
 
 export const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  width: 130px;
+  height: 33px;
   justify-content: space-between;
 `;
 
-export const SelectButton = styled.input.attrs({
-  type: "file",
-})`
+export const SelectButton = styled.div`
   border: 1px solid var(--green-dark);
   border-radius: 4px;
   background-color: var(--green-light);
   width: 60px;
-  padding: 5px 5px 5px 5px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 33px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Input = styled.input.attrs({
+  type: "file",
+})`
+  display: none;
+`;
+
+export const UploadButton = styled.div`
+  border: 1px solid var(--blue-dark);
+  border-radius: 4px;
+  background-color: var(--blue-light);
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 33px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
