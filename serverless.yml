@@ -13,4 +13,4 @@ provider:
 
 functions:
   sayHello:
-    handler: src/helloWorld/handler.helloLambdaWorld
+    handler: src/image-resize/handler.helloLambdaWorld
