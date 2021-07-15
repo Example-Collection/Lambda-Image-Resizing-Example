@@ -21,6 +21,7 @@ const UploadImage = (): JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
   const imageRef =
     useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
+  const [url, setUrl] = useState<string | null>(null);
 
   const parseFileName = (rawUrl: string): string => {
     const splitted = rawUrl.split("/");
@@ -86,10 +87,29 @@ const UploadImage = (): JSX.Element => {
           <Td flex={2}>Size</Td>
         </Tr>
         <Tr>
-          <Td flex={1}>{image ? image.name : ""}</Td>
-          <Td flex={2}>{image ? byteToKB(image.size) + "KB" : ""}</Td>
+          <Td flex={1}>{image ? image.name : "Not selected."}</Td>
+          <Td flex={2}>
+            {image ? byteToKB(image.size) + "KB" : "Not selected."}
+          </Td>
         </Tr>
       </Table>
+      <Space />
+      <div>After Uploading!</div>
+      <Table>
+        <Tr>
+          <Td flex={1}>URL</Td>
+        </Tr>
+        <Tr>
+          <Td flex={1}>{url ? url : "Not uploaded"}</Td>
+        </Tr>
+        <Tr>
+          <Td flex={1}>Size</Td>
+        </Tr>
+        <Tr>
+          <Td flex={1}>Not uploaded.</Td>
+        </Tr>
+      </Table>
+      <Space />
     </Container>
   );
 };

@@ -87,4 +87,7 @@ export const Td = styled.div<{ flex: number }>`
   padding: 5px;
   width: 100%;
   border: 1px solid var(--gray);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 `;
