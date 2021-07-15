@@ -3,6 +3,9 @@ plugins:
   - serverless-plugin-typescript
   - serverless-offline
 
+package:
+  patterns:
+    - "web/**"
 provider:
   name: aws
   runtime: nodejs14.x
@@ -12,5 +15,5 @@ provider:
     TZ: "Asia/Seoul"
 
 functions:
-  sayHello:
+  resize:
     handler: src/image-resize/handler.helloLambdaWorld
