@@ -19,4 +19,4 @@ provider:
 
 functions:
   resize:
-    handler: src/image-resize/handler.helloLambdaWorld
+    handler: src/image-resize/handler.upload
