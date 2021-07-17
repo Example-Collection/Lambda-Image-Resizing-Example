@@ -13,7 +13,10 @@ provider:
   region: ap-northeast-2
   environment:
     TZ: "Asia/Seoul"
+    AWS_S3_ACCESS_KEY_ID: ${env:AWS_S3_ACCESS_KEY_ID}
+    AWS_S3_SECRET_ACCESS_KEY: ${env:AWS_S3_SECRET_ACCESS_KEY}
+    AWS_S3_BUCKET: ${env:AWS_S3_BUCKET}
 
 functions:
   resize:
-    handler: src/image-resize/handler.helloLambdaWorld
+    handler: src/image-resize/handler.upload
