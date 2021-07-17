@@ -1,15 +1,16 @@
 import { APIGatewayProxyEvent, Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
+import { PutObjectRequest } from "aws-sdk/clients/s3";
 import * as parser from "lambda-multipart-parser";
-import { parse } from "yargs";
 import {
   AWS_S3_ACCESS_KEY_ID,
   AWS_S3_BUCKET,
   AWS_S3_SECRET_ACCESS_KEY,
 } from ".";
+import { compress } from "./compressor.service";
 
 interface Response {
-  message: string;
+  url: string;
 }
 
 const parseFile = async (
@@ -20,7 +21,9 @@ const parseFile = async (
   return file;
 };
 
-const uploadToS3 = async (file: parser.MultipartFile): Promise<void> => {
+const uploadToS3 = async (
+  beforeFile: parser.MultipartFile
+): Promise<Response> => {
   AWS.config.update({
     region: "ap-northeast-2",
     credentials: new AWS.Credentials({
@@ -30,16 +33,27 @@ const uploadToS3 = async (file: parser.MultipartFile): Promise<void> => {
   });
 
   const s3 = new AWS.S3({ params: { Bucket: AWS_S3_BUCKET } });
-  const request = s3.putObject({ Bucket: AWS_S3_BUCKET });
+
+  const compressedFile = await compress(beforeFile.content);
+
+  const putObjectRequest: PutObjectRequest = {
+    Key: beforeFile.filename,
+    Bucket: AWS_S3_BUCKET,
+    Body: compressedFile.data,
+  };
+
+  const result = await s3.upload(putObjectRequest).promise();
+
+  const response: Response = {
+    url: result.Location,
+  };
+
+  return response;
 };
 
 const upload: Handler = async (event: APIGatewayProxyEvent) => {
   const file = await parseFile(event);
-
-  const response: Response = {
-    message: "Hello, Lambda new!!",
-  };
-
+  const response = await uploadToS3(file);
   return {
     statusCode: 200,
     body: JSON.stringify(response),

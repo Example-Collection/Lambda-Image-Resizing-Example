@@ -1,8 +1,8 @@
 import sharp, { OutputInfo } from "sharp";
 
 export interface CompressOptions {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 interface ImageDataAndInfo {
@@ -12,10 +12,10 @@ interface ImageDataAndInfo {
 
 export const compress = async (
   bits: Buffer,
-  options: CompressOptions
+  options?: CompressOptions
 ): Promise<ImageDataAndInfo> => {
   const { data, info } = await sharp(bits)
-    .resize(options.width, options.height)
+    .resize(options?.width, options?.height)
     .webp()
     .toBuffer({ resolveWithObject: true });
 
