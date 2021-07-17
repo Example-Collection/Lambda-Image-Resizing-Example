@@ -57,6 +57,11 @@ const upload: Handler = async (event: APIGatewayProxyEvent) => {
   return {
     statusCode: 200,
     body: JSON.stringify(response),
+    headers: {
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "HEAD,OPTIONS,POST,GET",
+    },
   };
 };
 
