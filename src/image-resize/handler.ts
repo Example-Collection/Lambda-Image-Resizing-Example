@@ -1,5 +1,7 @@
-import { Handler } from "aws-lambda";
+import { APIGatewayProxyEvent, Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
+import * as parser from "lambda-multipart-parser";
+import { parse } from "yargs";
 import {
   AWS_S3_ACCESS_KEY_ID,
   AWS_S3_BUCKET,
@@ -10,7 +12,15 @@ interface Response {
   message: string;
 }
 
-const upload: Handler = async (event) => {
+const parseFile = async (
+  event: APIGatewayProxyEvent
+): Promise<parser.MultipartFile> => {
+  const parsedFile = await parser.parse(event);
+  const file = parsedFile.files[0];
+  return file;
+};
+
+const uploadToS3 = async (file: parser.MultipartFile): Promise<void> => {
   AWS.config.update({
     region: "ap-northeast-2",
     credentials: new AWS.Credentials({
@@ -19,9 +29,12 @@ const upload: Handler = async (event) => {
     }),
   });
 
-  console.log({ event });
-
   const s3 = new AWS.S3({ params: { Bucket: AWS_S3_BUCKET } });
+  const request = s3.putObject({ Bucket: AWS_S3_BUCKET });
+};
+
+const upload: Handler = async (event: APIGatewayProxyEvent) => {
+  const file = await parseFile(event);
 
   const response: Response = {
     message: "Hello, Lambda new!!",
