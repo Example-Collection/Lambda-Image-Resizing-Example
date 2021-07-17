@@ -24,9 +24,12 @@ const UploadImage = (): JSX.Element => {
     useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
   const [url, setUrl] = useState<string | null>(null);
   const [size, setSize] = useState<string | null>(null);
+  const [suppressedSize, setSuppressedSize] = useState<string | null>(null);
 
-  const byteToKB = (byte: number): string => {
-    return (byte / 1024.0).toFixed(2);
+  const byteToKB = (byte: number | string): string => {
+    if (typeof byte === "string") {
+      return (Number(byte) / 1024.0).toFixed(2);
+    } else return (byte / 1024.0).toFixed(2);
   };
 
   const getImageSrc = (): string => {
@@ -56,6 +59,23 @@ const UploadImage = (): JSX.Element => {
     }
   };
 
+  const setUploadedImageSize = async (url: string): Promise<void> => {
+    try {
+      const response = await axios.head(url);
+      const size = response.headers["content-length"];
+      setSize(size);
+      setSuppressedSize(getSuppressRate(size));
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const getSuppressRate = (size: string): string => {
+    if (image) {
+      return ((Number(size) / image.size) * 100).toFixed(2);
+    } else return "0";
+  };
+
   const uploadImage = async (): Promise<void> => {
     if (!image) {
       alert("Select an image to upload.");
@@ -70,13 +90,7 @@ const UploadImage = (): JSX.Element => {
         },
       });
       setUrl(response.data.url);
-    } catch (error) {
-      alert(error);
-    }
-
-    try {
-      const response = await axios.head(IMAGE_UPLOAD_URL);
-      console.log({ response });
+      await setUploadedImageSize(response.data.url);
     } catch (error) {
       alert(error);
     }
@@ -125,13 +139,14 @@ const UploadImage = (): JSX.Element => {
           <Td flex={1}>{url ? url : "Not uploaded"}</Td>
         </Tr>
         <Tr>
-          <Td flex={1}>Size</Td>
+          <Td flex={1}>Uploaded Size</Td>
         </Tr>
         <Tr>
-          <Td flex={1}>Not uploaded.</Td>
+          <Td flex={1}>{size ? byteToKB(size) : "Not uploaded."}</Td>
         </Tr>
       </Table>
       <Space />
+      <div>Supress rate: {suppressedSize ? `${suppressedSize}%` : "N/A"}</div>
     </Container>
   );
 };
