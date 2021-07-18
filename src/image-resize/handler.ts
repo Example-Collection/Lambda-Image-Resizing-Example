@@ -26,10 +26,6 @@ const uploadToS3 = async (
 ): Promise<Response> => {
   AWS.config.update({
     region: "ap-northeast-2",
-    credentials: new AWS.Credentials({
-      accessKeyId: AWS_S3_ACCESS_KEY_ID,
-      secretAccessKey: AWS_S3_SECRET_ACCESS_KEY,
-    }),
   });
 
   const s3 = new AWS.S3({ params: { Bucket: AWS_S3_BUCKET } });
