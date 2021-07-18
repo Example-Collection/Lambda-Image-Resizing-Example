@@ -15,8 +15,6 @@
 - `AWS_ACCESS_KEY_ID`: Lambda 배포 권한을 가진 AWS IAM 사용자의 access key
 - `AWS_SECRET_ACCESS_KEY`: Lambda 배포 권한을 가진 AWS IAM 사용자의 secret key
 - `AWS_S3_BUCKET`: 사진을 저장할 S3 Bucket 이름
-- `AWS_S3_ACCESS_KEY_ID`: S3 Bucket 에 접근할 AWS IAM 사용자의 access key
-- `AWS_S3_SECRET_ACCESS_KEY`: S3 Bucket 에 접근할 AWS IAM 사용자의 secret key
 
 <h3>예시 페이지</h3>
 
