@@ -142,7 +142,7 @@ const UploadImage = (): JSX.Element => {
           <Td flex={1}>Uploaded Size</Td>
         </Tr>
         <Tr>
-          <Td flex={1}>{size ? byteToKB(size) : "Not uploaded."}</Td>
+          <Td flex={1}>{size ? `${byteToKB(size)}%` : "Not uploaded."}</Td>
         </Tr>
       </Table>
       <Space />
