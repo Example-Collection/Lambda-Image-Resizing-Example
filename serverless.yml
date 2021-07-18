@@ -7,28 +7,29 @@ package:
   patterns:
     - "web/**"
 provider:
+  lambdaHashingVersion: "20201221"
   name: aws
   runtime: nodejs14.x
   stage: DEVELOPMENT
   region: ap-northeast-2
   apiGateway:
     binaryMediaTypes:
-      - 'multipart/form-data'
+      - "multipart/form-data"
   environment:
     TZ: "Asia/Seoul"
     AWS_S3_BUCKET: ${env:AWS_S3_BUCKET}
   iam:
     role:
       statements:
-        - Effect: 'Allow'
+        - Effect: "Allow"
           Action:
-            - 's3:PutObject'
+            - "s3:PutObject"
           Resource:
             - Fn::Join:
-              - ''
-              - - 'arn:aws:s3:::'
-                - ${env:AWS_S3_BUCKET} 
-                - '/*'
+                - ""
+                - - "arn:aws:s3:::"
+                  - ${env:AWS_S3_BUCKET}
+                  - "/*"
 
 functions:
   resize:
