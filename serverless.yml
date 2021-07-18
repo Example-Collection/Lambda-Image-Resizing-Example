@@ -16,9 +16,19 @@ provider:
       - 'multipart/form-data'
   environment:
     TZ: "Asia/Seoul"
-    AWS_S3_ACCESS_KEY_ID: ${env:AWS_S3_ACCESS_KEY_ID}
-    AWS_S3_SECRET_ACCESS_KEY: ${env:AWS_S3_SECRET_ACCESS_KEY}
     AWS_S3_BUCKET: ${env:AWS_S3_BUCKET}
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 's3:PutObject'
+          Resource:
+            - Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - ${env:AWS_S3_BUCKET} 
+                - '/*'
 
 functions:
   resize:
