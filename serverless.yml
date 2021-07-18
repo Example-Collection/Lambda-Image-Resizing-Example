@@ -11,6 +11,9 @@ provider:
   runtime: nodejs14.x
   stage: DEVELOPMENT
   region: ap-northeast-2
+  apiGateway:
+    binaryMediaTypes:
+      - 'multipart/form-data'
   environment:
     TZ: "Asia/Seoul"
     AWS_S3_ACCESS_KEY_ID: ${env:AWS_S3_ACCESS_KEY_ID}
@@ -20,3 +23,8 @@ provider:
 functions:
   resize:
     handler: src/image-resize/handler.upload
+    events:
+      - http:
+          path: upload
+          method: post
+          cors: true
