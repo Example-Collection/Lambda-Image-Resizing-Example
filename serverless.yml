@@ -11,8 +11,6 @@ provider:
   environment:
     TZ: "Asia/Seoul"
     AWS_S3_BUCKET: ${env:AWS_S3_BUCKET}
-    AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
-    AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
 
 functions:
   resize:
