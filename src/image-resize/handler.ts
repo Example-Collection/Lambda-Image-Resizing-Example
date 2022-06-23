@@ -2,11 +2,7 @@ import { APIGatewayProxyEvent, Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import { PutObjectRequest } from "aws-sdk/clients/s3";
 import * as parser from "lambda-multipart-parser";
-import {
-  AWS_S3_ACCESS_KEY_ID,
-  AWS_S3_BUCKET,
-  AWS_S3_SECRET_ACCESS_KEY,
-} from ".";
+import { AWS_ACCESS_KEY_ID, AWS_S3_BUCKET, AWS_SECRET_ACCESS_KEY } from ".";
 import { compress } from "./compressor.service";
 
 interface Response {
@@ -26,6 +22,12 @@ const uploadToS3 = async (
 ): Promise<Response> => {
   AWS.config.update({
     region: "ap-northeast-2",
+    account: {
+      credentials: {
+        accessKeyId: AWS_ACCESS_KEY_ID,
+        secretAccessKey: AWS_SECRET_ACCESS_KEY,
+      },
+    },
   });
 
   const s3 = new AWS.S3({ params: { Bucket: AWS_S3_BUCKET } });
